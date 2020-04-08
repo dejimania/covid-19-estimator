@@ -1,10 +1,11 @@
 // Function to normalize months, weeks into days
 const normalizeDays = (types) => {
+  let days;
   switch (types) {
-    case "months":
+    case 'months':
       days = 30;
       break;
-    case "weeks":
+    case 'weeks':
       days = 7;
       break;
     default:
@@ -12,21 +13,22 @@ const normalizeDays = (types) => {
       break;
   }
   return days;
-}
+};
 
 // Infection estimator
 const estimator = (infection, pTypes, period) => {
   let extimatedInfection;
-  let day = parseInt(period);
-  if(day === 1 || day === 2) {
+  let day = parseInt(period, 10);
+  if (day === 1 || day === 2) {
     extimatedInfection = infection;
   } else {
     day = normalizeDays(pTypes) * period;
-    const factor = Math.pow(2, Math.trunc(day / 3));
+    // const factor = Math.pow(2, Math.trunc(day / 3));
+    const factor = 2 ** Math.trunc(day / 3);
     extimatedInfection = infection * factor;
   }
   return extimatedInfection;
-}
+};
 
 
 const covid19ImpactEstimator = (data) => {
@@ -34,19 +36,20 @@ const covid19ImpactEstimator = (data) => {
   const impact = {};
   const severeImpact = {};
   // if(input.reportedCases) {
-    impact.currentlyInfected = input.reportedCases * 10;
-    severeImpact.currentlyInfected = input.reportedCases * 50;
+  impact.currentlyInfected = input.reportedCases * 10;
+  severeImpact.currentlyInfected = input.reportedCases * 50;
 
-    impact.infectionsByRequestedTime = estimator(impact.currentlyInfected, input.periodType, input.timeToElapse);
-    severeImpact.infectionsByRequestedTime = estimator(severeImpact.currentlyInfected, input.periodType, input.timeToElapse);
-
+  impact.infectionsByRequestedTime = estimator(impact.currentlyInfected,
+    input.periodType, input.timeToElapse);
+  severeImpact.infectionsByRequestedTime = estimator(severeImpact.currentlyInfected,
+    input.periodType, input.timeToElapse);
 
   // }
   return {
     input,
     impact,
-    severeImpact,
-  }
-}
+    severeImpact
+  };
+};
 
 export default covid19ImpactEstimator;

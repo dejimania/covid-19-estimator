@@ -17,17 +17,23 @@ const normalizeDays = (types) => {
 
 // Infection estimator
 const estimator = (infection, pTypes, period) => {
-  let extimatedInfection;
+  let estimatedInfection;
   let day = parseInt(period, 10);
   if (day === 1 || day === 2) {
-    extimatedInfection = infection;
+    if (pTypes === "months" || pTypes === "weeks" ) {
+      day = normalizeDays(pTypes) * period;
+      const factor = 2 ** Math.trunc(day / 3);
+      estimatedInfection = infection * factor;
+    } else {
+      estimatedInfection = infection * day;
+    }
   } else {
     day = normalizeDays(pTypes) * period;
     // const factor = Math.pow(2, Math.trunc(day / 3));
     const factor = 2 ** Math.trunc(day / 3);
-    extimatedInfection = infection * factor;
+    estimatedInfection = infection * factor;
   }
-  return extimatedInfection;
+  return estimatedInfection;
 };
 
 

@@ -20,7 +20,7 @@ const estimator = (infection, pTypes, period) => {
   let estimatedInfection;
   let day = parseInt(period, 10);
   if (day === 1 || day === 2) {
-    if (pTypes === "months" || pTypes === "weeks" ) {
+    if (pTypes === 'months' || pTypes === 'weeks') {
       day = normalizeDays(pTypes) * period;
       const factor = 2 ** Math.trunc(day / 3);
       estimatedInfection = infection * factor;

@@ -52,7 +52,7 @@ const estimateLossToEconomy = (infectedByReqTime, data) => {
     timeToElapse: time
   } = data;
   const period = normalizeDays(periodType) * time;
-  const dollarsInFlight = infectedByReqTime * income * period * population;
+  const dollarsInFlight = Math.trunc(infectedByReqTime * income * period * population);
   return dollarsInFlight;
 };
 

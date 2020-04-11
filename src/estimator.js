@@ -56,7 +56,7 @@ const estimateLossToEconomy = (infectedByReqTime, data) => {
   let dollarsInFlight;
   let avgIncome = population;
   if (avgIncome < 1 && avgIncome > 0) {
-    dollarsInFlight = Math.trunc(infectedByReqTime * income * period * avgIncome);
+    dollarsInFlight = Math.trunc((infectedByReqTime * income * avgIncome) / period);
   } else {
     avgIncome /= 100;
     dollarsInFlight = Math.trunc((infectedByReqTime * income * avgIncome) / period);

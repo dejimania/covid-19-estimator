@@ -59,7 +59,7 @@ const estimateLossToEconomy = (infectedByReqTime, data) => {
     dollarsInFlight = Math.trunc(infectedByReqTime * income * period * avgIncome);
   } else {
     avgIncome /= 100;
-    dollarsInFlight = Math.trunc(infectedByReqTime * income * period * avgIncome);
+    dollarsInFlight = Math.trunc((infectedByReqTime * income * avgIncome) / period);
   }
   return dollarsInFlight;
 };
